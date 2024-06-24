@@ -80,13 +80,13 @@ class Stage2Generator(nn.Module):
         return x
 
 
-stage2_generator = Stage2Generator(text_embedding_dim=768, img_size=64)
+# stage2_generator = Stage2Generator(text_embedding_dim=768, img_size=64)
 # Set the model to evaluation mode
 stage1_generator.eval()
-stage2_generator.eval()
+# stage2_generator.eval()
 device = 'cpu'
 stage1_generator.load_state_dict(torch.load('Weights/stage1Generator_weights.pth',map_location=device))
-stage2_generator.load_state_dict(torch.load('Weights/stage2Generator_weights_UPDATED.pth',map_location=device))
+# stage2_generator.load_state_dict(torch.load('Weights/stage2Generator_weights_UPDATED.pth',map_location=device))
 print("Models loaded successfully")
     
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -109,9 +109,9 @@ def generate_images(text_embeddings):
     noise = torch.randn(1, 100)   
     with torch.no_grad():
         Image_stage1 = stage1_generator(text_embeddings,noise)
-        Image_stage2 = stage2_generator(text_embeddings,Image_stage1) 
-    print(Image_stage2.shape)
-    return Image_stage2.squeeze()
+        # Image_stage2 = stage2_generator(text_embeddings,Image_stage1) 
+    print(Image_stage1.shape)
+    return Image_stage1.squeeze()
 
 # def display_images(image, title="Generated Images"):
 #     # Display a grid of images using matplotlib
